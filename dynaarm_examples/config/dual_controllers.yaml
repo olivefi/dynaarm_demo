@@ -1,0 +1,176 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000
+
+    dynaarm_status_controller:
+      type: dynaarm_controllers/StatusController
+
+    gravity_compensation_controller:
+      type: dynaarm_controllers/GravityCompensationController
+
+    freedrive_controller:
+      type: dynaarm_controllers/FreeDriveController
+
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    joint_trajectory_controller:
+      type: "joint_trajectory_controller/JointTrajectoryController"
+
+    # position_controller:
+    #   type: forward_command_controller/ForwardCommandController
+
+
+    # effort_controller:
+    #   type: effort_controllers/JointGroupEffortController
+
+    # cartesian_motion_controller:
+    #   type: cartesian_motion_controller/CartesianMotionController
+
+    # motion_control_handle:
+    #   type: cartesian_controller_handles/MotionControlHandle
+
+    # pid_tuner:
+    #   type: dynaarm_controllers/PIDTuner
+
+# pid_tuner:
+#   ros__parameters:
+#     joints:
+#       - shoulder_rotation
+#       - shoulder_flexion
+#       - elbow_flexion
+#       - forearm_rotation
+#       - wrist_flexion
+#       - wrist_rotation
+
+
+dynaarm_status_controller:
+  ros__parameters:
+    joints:
+      - left/shoulder_rotation
+      - left/shoulder_flexion
+      - left/elbow_flexion
+      - left/forearm_rotation
+      - left/wrist_flexion
+      - left/wrist_rotation
+      - right/shoulder_rotation
+      - right/shoulder_flexion
+      - right/elbow_flexion
+      - right/forearm_rotation
+      - right/wrist_flexion
+      - right/wrist_rotation
+
+
+# motion_control_handle:
+#   ros__parameters:
+#     end_effector_link: "flange"
+#     robot_base_link: "base"
+#     joints:
+#       - shoulder_rotation
+#       - shoulder_flexion
+#       - elbow_flexion
+#       - forearm_rotation
+#       - wrist_flexion
+#       - wrist_rotation
+
+# cartesian_motion_controller:
+#   ros__parameters:
+#     end_effector_link: "flange"
+#     robot_base_link: "base"
+#     joints:
+#       - shoulder_rotation
+#       - shoulder_flexion
+#       - elbow_flexion
+#       - forearm_rotation
+#       - wrist_flexion
+#       - wrist_rotation
+#     command_interfaces:
+#       - position
+#       #- velocity
+#     solver:
+#         error_scale: 1.0
+#         iterations: 10
+#     pd_gains:
+#         trans_x: {p: 1.0}
+#         trans_y: {p: 1.0}
+#         trans_z: {p: 1.0}
+#         rot_x: {p: 0.5}
+#         rot_y: {p: 0.5}
+#         rot_z: {p: 0.5}
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - left/shoulder_rotation
+      - left/shoulder_flexion
+      - left/elbow_flexion
+      - left/forearm_rotation
+      - left/wrist_flexion
+      - left/wrist_rotation
+      - right/shoulder_rotation
+      - right/shoulder_flexion
+      - right/elbow_flexion
+      - right/forearm_rotation
+      - right/wrist_flexion
+      - right/wrist_rotation
+    command_interfaces:
+      - position
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+
+# position_controller:
+#   ros__parameters:
+#     joints:
+#       - shoulder_rotation
+#       - shoulder_flexion
+#       - elbow_flexion
+#       - forearm_rotation
+#       - wrist_flexion
+#       - wrist_rotation
+#     interface_name: position
+
+# effort_controller:
+#   ros__parameters:
+#     joints:
+#       - shoulder_rotation
+#       - shoulder_flexion
+#       - elbow_flexion
+#       - forearm_rotation
+#       - wrist_flexion
+#       - wrist_rotation
+
+gravity_compensation_controller:
+  ros__parameters:
+    joints:
+      - left/shoulder_rotation
+      - left/shoulder_flexion
+      - left/elbow_flexion
+      - left/forearm_rotation
+      - left/wrist_flexion
+      - left/wrist_rotation
+      - right/shoulder_rotation
+      - right/shoulder_flexion
+      - right/elbow_flexion
+      - right/forearm_rotation
+      - right/wrist_flexion
+      - right/wrist_rotation
+
+
+freedrive_controller:
+  ros__parameters:
+    joints:
+      - left/shoulder_rotation
+      - left/shoulder_flexion
+      - left/elbow_flexion
+      - left/forearm_rotation
+      - left/wrist_flexion
+      - left/wrist_rotation
+      - right/shoulder_rotation
+      - right/shoulder_flexion
+      - right/elbow_flexion
+      - right/forearm_rotation
+      - right/wrist_flexion
+      - right/wrist_rotation

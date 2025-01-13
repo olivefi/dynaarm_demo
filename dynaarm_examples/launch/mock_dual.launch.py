@@ -49,7 +49,7 @@ def launch_setup(context, *args, **kwargs):
         "dynaarm_description"
     )
     doc = xacro.parse(
-        open(os.path.join(pkg_share_description, "urdf/dynaarm_standalone.urdf.xacro"))
+        open(os.path.join(pkg_share_description, "urdf/dynaarm_standalone_dual.urdf.xacro"))
     )
     xacro.process_doc(
         doc,
@@ -61,7 +61,6 @@ def launch_setup(context, *args, **kwargs):
         },
     )
     robot_description = {"robot_description": doc.toxml()}
-    #print(robot_description)
 
     # Subscribe to the joint states of the robot, and publish the 3D pose of each link.
     robot_state_pub_node = Node(
@@ -99,7 +98,7 @@ def launch_setup(context, *args, **kwargs):
         [
             FindPackageShare("dynaarm_examples"),
             "config",
-            "controllers.yaml",
+            "dual_controllers.yaml",
         ]
     )
 

@@ -24,7 +24,11 @@
 import os
 import xacro
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, RegisterEventHandler, OpaqueFunction
+from launch.actions import (
+    DeclareLaunchArgument,
+    RegisterEventHandler,
+    OpaqueFunction,
+)
 from launch.conditions import IfCondition
 from launch.event_handlers import OnProcessExit
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
@@ -35,11 +39,15 @@ from launch_ros.actions import Node
 
 def launch_setup(context, *args, **kwargs):
 
+    ethercat_bus_left = LaunchConfiguration("ethercat_bus_left")
+    ethercat_bus_right = LaunchConfiguration("ethercat_bus_right")
     dof = LaunchConfiguration("dof")
-    gui = LaunchConfiguration("gui")
     covers = LaunchConfiguration("covers")
     version = LaunchConfiguration("version")
+    start_rviz = LaunchConfiguration("start_rviz")
 
+    ethercat_bus_left_value = ethercat_bus_left.perform(context)
+    ethercat_bus_right_value = ethercat_bus_right.perform(context)
     dof_value = dof.perform(context)
     covers_value = covers.perform(context)
     version_value = version.perform(context)
@@ -49,19 +57,20 @@ def launch_setup(context, *args, **kwargs):
         "dynaarm_description"
     )
     doc = xacro.parse(
-        open(os.path.join(pkg_share_description, "urdf/dynaarm_standalone.urdf.xacro"))
+        open(os.path.join(pkg_share_description, "urdf/dynaarm_standalone_dual.urdf.xacro"))
     )
     xacro.process_doc(
         doc,
         mappings={
+            "ethercat_bus_left": ethercat_bus_left_value,
+            "ethercat_bus_right": ethercat_bus_right_value,
             "dof": dof_value,
             "covers": covers_value,
             "version": version_value,
-            "mode": "mock",
+            "mode": "real",
         },
     )
     robot_description = {"robot_description": doc.toxml()}
-    #print(robot_description)
 
     # Subscribe to the joint states of the robot, and publish the 3D pose of each link.
     robot_state_pub_node = Node(
@@ -72,14 +81,14 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # Launch RViz
-    rviz_config_file = PathJoinSubstitution([pkg_share_description, "config/config.rviz"])
+    rviz_config_file = PathJoinSubstitution([pkg_share_description, "config", "config.rviz"])
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
         name="rviz2",
         output="screen",
         arguments=["-d", rviz_config_file],
-        condition=IfCondition(gui),
+        condition=IfCondition(start_rviz),
     )
 
     joint_state_broadcaster_spawner_node = Node(
@@ -99,7 +108,7 @@ def launch_setup(context, *args, **kwargs):
         [
             FindPackageShare("dynaarm_examples"),
             "config",
-            "controllers.yaml",
+            "dual_controllers.yaml",
         ]
     )
 
@@ -113,16 +122,22 @@ def launch_setup(context, *args, **kwargs):
         },
     )
 
+    gravity_compensation_controller_node = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gravity_compensation_controller"],
+    )
+
     freedrive_controller_node = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["freedrive_controller", "--inactive"],
     )
 
-    gravity_compensation_controller_node = Node(
+    pid_tuner_node = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["gravity_compensation_controller"],
+        arguments=["pid_tuner", "--inactive"],
     )
 
     joint_trajectory_controller_node = Node(
@@ -150,8 +165,9 @@ def launch_setup(context, *args, **kwargs):
                 gravity_compensation_controller_node,
                 status_controller_node,
                 joint_trajectory_controller_node,
-                cartesian_motion_controller_node,
+                #cartesian_motion_controller_node,
                 freedrive_controller_node,
+                #pid_tuner_node,
             ],
         )
     )
@@ -169,14 +185,19 @@ def launch_setup(context, *args, **kwargs):
 
 def generate_launch_description():
 
-    # Declare the launch arguments
     declared_arguments = []
     declared_arguments.append(
         DeclareLaunchArgument(
-            name="gui",
-            default_value="True",
-            choices=["True", "False"],
-            description="Flag to enable joint_state_publisher_gui",
+            name="ethercat_bus_left",
+            default_value="enp5s0",
+            description="The ethercat bus id or name.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            name="ethercat_bus_right",
+            default_value="enp86s0",
+            description="The ethercat bus id or name.",
         )
     )
     declared_arguments.append(
@@ -200,6 +221,13 @@ def generate_launch_description():
             default_value="arowana4",
             choices=["arowana4", "baracuda12"],
             description="Select the desired version of robot ",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "start_rviz",
+            default_value="True",
+            description="Start RViz2 automatically with this launch file.",
         )
     )
 
