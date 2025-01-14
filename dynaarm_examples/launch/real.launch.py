@@ -128,7 +128,7 @@ def launch_setup(context, *args, **kwargs):
     freedrive_controller_node = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["freedrive_controller"],
+        arguments=["freedrive_controller", "--inactive"],
     )
 
     pid_tuner_node = Node(
@@ -140,7 +140,7 @@ def launch_setup(context, *args, **kwargs):
     joint_trajectory_controller_node = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_trajectory_controller", "--inactive"],
+        arguments=["joint_trajectory_controller"],
     )
 
     cartesian_motion_controller_node = Node(
@@ -208,8 +208,8 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             name="version",
-            default_value="baracuda12",
-            choices=["arowna4", "baracuda12"],
+            default_value="arowana4",
+            choices=["arowana4", "baracuda12"],
             description="Select the desired version of robot ",
         )
     )

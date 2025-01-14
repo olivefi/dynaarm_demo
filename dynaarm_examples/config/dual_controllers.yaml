@@ -48,18 +48,18 @@ controller_manager:
 dynaarm_status_controller:
   ros__parameters:
     joints:
-      - left/shoulder_rotation
-      - left/shoulder_flexion
-      - left/elbow_flexion
-      - left/forearm_rotation
-      - left/wrist_flexion
-      - left/wrist_rotation
-      - right/shoulder_rotation
-      - right/shoulder_flexion
-      - right/elbow_flexion
-      - right/forearm_rotation
-      - right/wrist_flexion
-      - right/wrist_rotation
+      - leftshoulder_rotation
+      - leftshoulder_flexion
+      - leftelbow_flexion
+      - leftforearm_rotation
+      - leftwrist_flexion
+      - leftwrist_rotation
+      - rightshoulder_rotation
+      - rightshoulder_flexion
+      - rightelbow_flexion
+      - rightforearm_rotation
+      - rightwrist_flexion
+      - rightwrist_rotation
 
 
 # motion_control_handle:
@@ -102,18 +102,18 @@ dynaarm_status_controller:
 joint_trajectory_controller:
   ros__parameters:
     joints:
-      - left/shoulder_rotation
-      - left/shoulder_flexion
-      - left/elbow_flexion
-      - left/forearm_rotation
-      - left/wrist_flexion
-      - left/wrist_rotation
-      - right/shoulder_rotation
-      - right/shoulder_flexion
-      - right/elbow_flexion
-      - right/forearm_rotation
-      - right/wrist_flexion
-      - right/wrist_rotation
+      - leftshoulder_rotation
+      - leftshoulder_flexion
+      - leftelbow_flexion
+      - leftforearm_rotation
+      - leftwrist_flexion
+      - leftwrist_rotation
+      - rightshoulder_rotation
+      - rightshoulder_flexion
+      - rightelbow_flexion
+      - rightforearm_rotation
+      - rightwrist_flexion
+      - rightwrist_rotation
     command_interfaces:
       - position
       - velocity
@@ -145,32 +145,32 @@ joint_trajectory_controller:
 gravity_compensation_controller:
   ros__parameters:
     joints:
-      - left/shoulder_rotation
-      - left/shoulder_flexion
-      - left/elbow_flexion
-      - left/forearm_rotation
-      - left/wrist_flexion
-      - left/wrist_rotation
-      - right/shoulder_rotation
-      - right/shoulder_flexion
-      - right/elbow_flexion
-      - right/forearm_rotation
-      - right/wrist_flexion
-      - right/wrist_rotation
+      - leftshoulder_rotation
+      - leftshoulder_flexion
+      - leftelbow_flexion
+      - leftforearm_rotation
+      - leftwrist_flexion
+      - leftwrist_rotation
+      - rightshoulder_rotation
+      - rightshoulder_flexion
+      - rightelbow_flexion
+      - rightforearm_rotation
+      - rightwrist_flexion
+      - rightwrist_rotation
 
 
 freedrive_controller:
   ros__parameters:
     joints:
-      - left/shoulder_rotation
-      - left/shoulder_flexion
-      - left/elbow_flexion
-      - left/forearm_rotation
-      - left/wrist_flexion
-      - left/wrist_rotation
-      - right/shoulder_rotation
-      - right/shoulder_flexion
-      - right/elbow_flexion
-      - right/forearm_rotation
-      - right/wrist_flexion
-      - right/wrist_rotation
+      - leftshoulder_rotation
+      - leftshoulder_flexion
+      - leftelbow_flexion
+      - leftforearm_rotation
+      - leftwrist_flexion
+      - leftwrist_rotation
+      - rightshoulder_rotation
+      - rightshoulder_flexion
+      - rightelbow_flexion
+      - rightforearm_rotation
+      - rightwrist_flexion
+      - rightwrist_rotation

@@ -196,7 +196,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             name="ethercat_bus_right",
-            default_value="enp86s0",
+            default_value="enx00e04c302aa3",
             description="The ethercat bus id or name.",
         )
     )
